@@ -54,6 +54,6 @@ public class MyAdapter extends BaseAdapter{
         imageView.setImageResource(ints[i]);
         titleTextView.setText(titleStrings[i]);
         detailTextView.setText(detailStrings[i]);
-        return null;
+        return view1;
     }
 }//end Class

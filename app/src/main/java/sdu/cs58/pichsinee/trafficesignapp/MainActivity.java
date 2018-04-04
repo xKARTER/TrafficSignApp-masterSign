@@ -1,8 +1,12 @@
 package sdu.cs58.pichsinee.trafficesignapp;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity {
@@ -16,20 +20,34 @@ public class MainActivity extends AppCompatActivity {
             R.drawable.traffic_20};
 
      private String[] titleSrrings , detailString;
-    @Override
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         listView =findViewById(R.id.listView);
-
         titleSrrings = getResources().getStringArray(R.array.title);
         detailString = getResources().getStringArray(R.array.detail);
 
 
         MyAdapter myAdapter = new MyAdapter(MainActivity.this,ints,titleSrrings,detailString);
         listView.setAdapter(myAdapter);
-        }
 
+        //เมื่อคลิกแต่ละไอเทมในริสวิวจะเชื่อมโยงไปหน้า Detail
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent detailIntent = new Intent(MainActivity.this, DetailActivity.class);
+                detailIntent.putExtra("Title", titleSrrings[i]);
+                detailIntent.putExtra("Detail", detailString[i]);
+                detailIntent.putExtra("Imge", ints);
+                startActivity(detailIntent);
+            }
+        });
+        }
+    public void clickLink (View view) {
+        Intent linkIntent = new Intent(Intent.ACTION_VIEW);
+        linkIntent.setData(Uri.parse("https://www.dlt.go.th/th/"));
+        startActivity(linkIntent);
+    }
 }
